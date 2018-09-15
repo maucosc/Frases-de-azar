@@ -34,9 +34,9 @@ public class TMLugar extends AbstractTableModel {
     @Override
     public String getColumnName(int col){
         if (col == 0) {
-            return "Id";
+            return "ID";
         } else {
-            return "Nombre";
+            return "Lugar";
         }
     }
 }

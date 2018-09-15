@@ -17,7 +17,7 @@ public class TMAccion extends AbstractTableModel{
 
     @Override
     public int getColumnCount() {
-        return 2;// id, nombre
+        return 2;
     }
 
     @Override
@@ -36,7 +36,7 @@ public class TMAccion extends AbstractTableModel{
         if(col == 0){
             return "ID";
         }else {
-            return "Nombre";
+            return "Acción";
         }
     }
     
