@@ -1,7 +1,8 @@
 package modelos;
 
-public class Accion {
-    private int id;
+public class Lugar {
+
+    private int id; // pk
     private String nombre;
 
     public int getId() {
@@ -19,6 +20,4 @@ public class Accion {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-    
-    
 }

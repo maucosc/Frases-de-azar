@@ -3,10 +3,10 @@ package modelos;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
-public class TMAccion extends AbstractTableModel{
-    private List<Accion> lista;
-    
-    public TMAccion(List<Accion> lista) {
+public class TMLugar extends AbstractTableModel {
+    private List<Lugar> lista;
+
+    public TMLugar(List<Lugar> lista) {
         this.lista = lista;
     }
 
@@ -17,28 +17,27 @@ public class TMAccion extends AbstractTableModel{
 
     @Override
     public int getColumnCount() {
-        return 2;// id, nombre
+        return 2;
     }
 
     @Override
     public Object getValueAt(int row, int column) {
-        Accion a = lista.get(row);
+        Lugar a = lista.get(row);
         
-        if(column == 0){
+        if (column == 0){
             return a.getId();
         }else{
             return a.getNombre();
         }
+        
     }
-
     @Override
-    public String getColumnName(int col) {
-        if(col == 0){
-            return "ID";
-        }else {
+    public String getColumnName(int col){
+        if (col == 0) {
+            return "Id";
+        } else {
             return "Nombre";
         }
     }
-    
-    
 }
+

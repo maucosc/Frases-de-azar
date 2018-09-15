@@ -4,10 +4,10 @@ package modelos;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
-public class TMNombres extends AbstractTableModel{
+public class TMNombre extends AbstractTableModel{
     private List<Nombre> lista;
 
-    public TMNombres(List<Nombre> lista) {
+    public TMNombre(List<Nombre> lista) {
         this.lista = lista;
     }
 

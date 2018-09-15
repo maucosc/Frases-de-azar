@@ -1,40 +1,58 @@
-
 package main;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import modelos.Acciones;
+import modelos.Accion;
+import modelos.Lugar;
 import modelos.Nombre;
-import modelos.TMAcciones;
-import modelos.TMNombres;
+import modelos.TMAccion;
+import modelos.TMLugar;
+import modelos.TMNombre;
 
 public class App extends javax.swing.JFrame {
 
     private List<Nombre> listaNombres;
-    private List<Acciones> listaAcciones;
-    private int suma;
-    private Random ran;
-    private int cont;
-    private List<Integer> numeros;
-    private TMNombres modelNombres;
-    private TMAcciones modelAcciones;
+    private List<Accion> listaAcciones;
+    private List<Lugar> listaLugares;
     
+    private Random ran;
+
+    private int cont;
+    private int cont1;
+    private int cont2;
+
+
+    private TMNombre modelNombres;
+    private TMAccion modelAcciones;
+    private TMLugar modelLugares;
+
     public App() {
         initComponents();
-        
+
         ran = new Random();
         listaNombres = new ArrayList<>();
-        setTitle("Frase Random" );
-        
+        listaAcciones = new ArrayList<>();
+        listaLugares = new ArrayList<>();
+
+        setTitle("Frases Random");
+
         setCentered(true);
         setResizable(false);
+        
         cont = 0;
-        
-        modelNombres = new TMNombres(listaNombres);
+        cont1 = 0;
+        cont2 = 0;
+
+        modelNombres = new TMNombre(listaNombres);
         tblListaNombres.setModel(modelNombres);
+
+        modelAcciones = new TMAccion(listaAcciones);
+        tblListaAccion.setModel(modelAcciones);
         
-        
+        modelLugares = new TMLugar(listaLugares);
+        tblListaLugar.setModel(modelLugares);
+
     }
 
     @SuppressWarnings("unchecked")
@@ -58,21 +76,29 @@ public class App extends javax.swing.JFrame {
         btnAzarNombre = new javax.swing.JButton();
         jScrollPane5 = new javax.swing.JScrollPane();
         tblListaNombres = new javax.swing.JTable();
-        lblNombreAzar = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         txtLugar = new javax.swing.JTextField();
-        btnLugar = new javax.swing.JButton();
-        jLabel7 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
+        btnAñadirLugar = new javax.swing.JButton();
+        lblContenidoLugar = new javax.swing.JLabel();
+        btnAzarLugar = new javax.swing.JButton();
         jScrollPane6 = new javax.swing.JScrollPane();
-        tblLugar = new javax.swing.JTable();
+        tblListaLugar = new javax.swing.JTable();
+        jPanel1 = new javax.swing.JPanel();
+        lblNombreAzar = new javax.swing.JLabel();
+        lblAccionAzar = new javax.swing.JLabel();
+        lblLugarAzar = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
+        jPanel9.setBackground(new java.awt.Color(0, 204, 204));
         jPanel9.setToolTipText("");
 
+        jPanel5.setBackground(new java.awt.Color(255, 0, 0));
+
         jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/aim_32.png"))); // NOI18N
         jLabel13.setText("Accion");
 
         btnAñadirAccion.setText("Anadir");
@@ -85,6 +111,11 @@ public class App extends javax.swing.JFrame {
         lblContenidoAccion.setText("contenido:");
 
         btnAzarAccion.setText("Azar");
+        btnAzarAccion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAzarAccionActionPerformed(evt);
+            }
+        });
 
         tblListaAccion.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -108,7 +139,7 @@ public class App extends javax.swing.JFrame {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(txtAccion, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(0, 6, Short.MAX_VALUE))
                     .addComponent(btnAñadirAccion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane10, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -119,9 +150,8 @@ public class App extends javax.swing.JFrame {
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel13)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(txtAccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnAñadirAccion)
@@ -134,10 +164,12 @@ public class App extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jPanel2.setBackground(new java.awt.Color(255, 0, 0));
         jPanel2.setToolTipText("");
 
         jLabel2.setBackground(new java.awt.Color(153, 255, 153));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/my-profile.png"))); // NOI18N
         jLabel2.setText("Nombre");
 
         btnAñadirNombre.setText("Anadir");
@@ -149,7 +181,7 @@ public class App extends javax.swing.JFrame {
 
         lblContenidoNom.setText("contenido:");
 
-        btnAzarNombre.setText("cualquiera");
+        btnAzarNombre.setText("azar");
         btnAzarNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAzarNombreActionPerformed(evt);
@@ -169,10 +201,6 @@ public class App extends javax.swing.JFrame {
         ));
         jScrollPane5.setViewportView(tblListaNombres);
 
-        lblNombreAzar.setForeground(new java.awt.Color(255, 102, 102));
-        lblNombreAzar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblNombreAzar.setText("nombre cualquiera");
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -184,45 +212,51 @@ public class App extends javax.swing.JFrame {
                     .addComponent(txtNombre, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btnAñadirNombre, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(lblNombreAzar, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(btnAzarNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 4, Short.MAX_VALUE))
+                        .addComponent(btnAzarNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 8, Short.MAX_VALUE))
                     .addComponent(lblContenidoNom, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnAñadirNombre)
-                .addGap(5, 5, 5)
+                .addComponent(btnAñadirNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblContenidoNom)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(11, 11, 11)
                 .addComponent(btnAzarNombre)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblNombreAzar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jPanel4.setBackground(new java.awt.Color(240, 0, 0));
+
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/if_15_2135924.png"))); // NOI18N
         jLabel4.setText("Lugar");
 
-        btnLugar.setText("Anadir");
+        btnAñadirLugar.setText("Anadir");
+        btnAñadirLugar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAñadirLugarActionPerformed(evt);
+            }
+        });
 
-        jLabel7.setText("contenido:");
+        lblContenidoLugar.setText("contenido:");
 
-        jButton3.setText("jButton3");
+        btnAzarLugar.setText("azar");
+        btnAzarLugar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAzarLugarActionPerformed(evt);
+            }
+        });
 
-        tblLugar.setModel(new javax.swing.table.DefaultTableModel(
+        tblListaLugar.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
                 {},
@@ -233,7 +267,7 @@ public class App extends javax.swing.JFrame {
 
             }
         ));
-        jScrollPane6.setViewportView(tblLugar);
+        jScrollPane6.setViewportView(tblListaLugar);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -242,30 +276,32 @@ public class App extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnLugar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
-                    .addComponent(txtLugar, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(lblContenidoLugar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)
+                            .addComponent(txtLugar, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnAñadirLugar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnAzarLugar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(txtLugar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnLugar)
+                .addComponent(btnAñadirLugar)
                 .addGap(3, 3, 3)
-                .addComponent(jLabel7)
+                .addComponent(lblContenidoLugar)
                 .addGap(7, 7, 7)
                 .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton3)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(btnAzarLugar)
+                .addContainerGap(43, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
@@ -273,22 +309,55 @@ public class App extends javax.swing.JFrame {
         jPanel9Layout.setHorizontalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel9Layout.createSequentialGroup()
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        jPanel1.setBackground(new java.awt.Color(102, 255, 153));
+
+        lblNombreAzar.setForeground(new java.awt.Color(255, 102, 102));
+        lblNombreAzar.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblNombreAzar.setText("Nombre aletorio");
+
+        lblAccionAzar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblAccionAzar.setText("Accion aletoria");
+
+        lblLugarAzar.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblLugarAzar.setText("Lugar aletorio");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(lblNombreAzar, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblAccionAzar, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblLugarAzar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(lblNombreAzar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 9, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblAccionAzar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblLugarAzar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -298,7 +367,9 @@ public class App extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -306,6 +377,8 @@ public class App extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -313,7 +386,7 @@ public class App extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAñadirNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAñadirNombreActionPerformed
-     AñadirNombre();
+        AnadirNombre();
     }//GEN-LAST:event_btnAñadirNombreActionPerformed
 
     private void btnAzarNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAzarNombreActionPerformed
@@ -321,15 +394,41 @@ public class App extends javax.swing.JFrame {
         if (size > 0) {
             int numRandom = ran.nextInt(size);
             System.out.println("Nombre " + numRandom);
-            
+
             Nombre a = listaNombres.get(numRandom);
-            lblNombreAzar.setText(a.getId()+"-" +a.getNombre());
+            lblNombreAzar.setText(a.getId() + "-" + a.getNombre());
         }
     }//GEN-LAST:event_btnAzarNombreActionPerformed
 
     private void btnAñadirAccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAñadirAccionActionPerformed
-        AñadirAccion();
+        AnadirAccion();
     }//GEN-LAST:event_btnAñadirAccionActionPerformed
+
+    private void btnAzarAccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAzarAccionActionPerformed
+        int size = listaAcciones.size();
+        if (size > 0) {
+            int numRandom = ran.nextInt(size);
+            System.out.println("RANDOM > " + numRandom);
+
+            Accion a = listaAcciones.get(numRandom);
+            lblAccionAzar.setText(a.getId() + " - " + a.getNombre());
+        }
+    }//GEN-LAST:event_btnAzarAccionActionPerformed
+
+    private void btnAñadirLugarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAñadirLugarActionPerformed
+        AnadirLugar();
+    }//GEN-LAST:event_btnAñadirLugarActionPerformed
+
+    private void btnAzarLugarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAzarLugarActionPerformed
+        int size = listaLugares.size();
+        if (size > 0) {
+            int numRandom = ran.nextInt(size);
+            System.out.println("RANDOM > " + numRandom);
+
+            Lugar a = listaLugares.get(numRandom);
+            lblLugarAzar.setText(a.getId() + " - " + a.getNombre());
+        }
+    }//GEN-LAST:event_btnAzarLugarActionPerformed
 
     public static void main(String args[]) {
 
@@ -342,15 +441,15 @@ public class App extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAzarAccion;
+    private javax.swing.JButton btnAzarLugar;
     private javax.swing.JButton btnAzarNombre;
     private javax.swing.JButton btnAñadirAccion;
+    private javax.swing.JButton btnAñadirLugar;
     private javax.swing.JButton btnAñadirNombre;
-    private javax.swing.JButton btnLugar;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel7;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
@@ -358,12 +457,15 @@ public class App extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane10;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JLabel lblAccionAzar;
     private javax.swing.JLabel lblContenidoAccion;
+    private javax.swing.JLabel lblContenidoLugar;
     private javax.swing.JLabel lblContenidoNom;
+    private javax.swing.JLabel lblLugarAzar;
     private javax.swing.JLabel lblNombreAzar;
     private javax.swing.JTable tblListaAccion;
+    private javax.swing.JTable tblListaLugar;
     private javax.swing.JTable tblListaNombres;
-    private javax.swing.JTable tblLugar;
     private javax.swing.JTextField txtAccion;
     private javax.swing.JTextField txtLugar;
     private javax.swing.JTextField txtNombre;
@@ -375,41 +477,61 @@ public class App extends javax.swing.JFrame {
         }
     }
 
-    private void AñadirNombre() {
-        
+    private void AnadirNombre() {
+
         String nombre = txtNombre.getText();
         if (!nombre.trim().isEmpty()) {
             Nombre a = new Nombre();
-            
+
             a.setNombre(nombre);
             a.setId(++cont);
-            
+
             listaNombres.add(a);
-            
+
             lblContenidoNom.setText("Contenido: " + listaNombres.size());
-            
+
             txtNombre.setText(null);
             txtNombre.requestFocus();
-            tblListaNombres.updateUI();            
+            tblListaNombres.updateUI();
         }
-    
+
     }
 
-    private void AñadirAccion() {
+    private void AnadirAccion() {
+
         String accion = txtAccion.getText();
         if (!accion.trim().isEmpty()) {
-            Acciones a = new Acciones();
-            
+            Accion a = new Accion();
+
             a.setNombre(accion);
-            a.setId(++cont);
-            
+            a.setId(++cont1);
+
             listaAcciones.add(a);
-            
+
             lblContenidoAccion.setText("Contenido: " + listaAcciones.size());
-            
+
             txtAccion.setText(null);
             txtAccion.requestFocus();
-            tblListaAccion.updateUI();            
+            tblListaAccion.updateUI();
+        }
+    }
+
+    private void AnadirLugar() {
+
+        String lugar = txtLugar.getText();
+        if (!lugar.trim().isEmpty()) {
+            Lugar a = new Lugar();
+
+            a.setNombre(lugar);
+            a.setId(++cont2);
+
+            listaLugares.add(a);
+
+            lblContenidoLugar.setText("Contenido: " + listaLugares.size());
+
+            txtLugar.setText(null);
+            txtLugar.requestFocus();
+            tblListaLugar.updateUI();
         }
     }
 }
